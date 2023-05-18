@@ -9,6 +9,7 @@ import { BsGithub, BsGoogle } from 'react-icons/bs';
 import Input from "@/app/components/inputs/Input";
 import Button from "@/app/components/Button";
 import AuthSocialButton from './AuthSocialButton';
+import { Island_Moments } from "next/font/google";
 
 type Variant = 'LOGIN' | 'REGISTER';
 
@@ -85,11 +86,11 @@ const AuthForm = () => {
                             label = 'Name'
                             register={register}
                             errors={errors}
-                            
+                            disabled={isLoading}
                         />
                     )}
-                    <Input id='email' label='Email address' type="email" register={register} errors={errors}/>
-                    <Input id='password' label='Password' type="password" register={register} errors={errors}/>
+                    <Input id='email' label='Email address' type="email" register={register} errors={errors} disabled={isLoading}/>
+                    <Input id='password' label='Password' type="password" register={register} errors={errors} disabled={isLoading}/>
                 
                     <div>
                         <Button
