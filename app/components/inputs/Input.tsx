@@ -1,13 +1,16 @@
-'sue client';
+'use client';
 
+// Support conditional className for TailwindCSS
 import clsx from 'clsx';
 
+// Import essential fields and hooks from react form
 import {
     FieldErrors,
     FieldValues,
     UseFormRegister,
 } from 'react-hook-form';
 
+// Declare an interface for input props
 interface InputProps {
     label: string;
     id: string;
@@ -18,6 +21,7 @@ interface InputProps {
     disabled?: boolean;
 }
 
+// Implement InputProps for every input element
 const Input: React.FC<InputProps> = ({
     label,
     id,
@@ -29,6 +33,7 @@ const Input: React.FC<InputProps> = ({
 }) => {
 
     return ( 
+        // Return a labeled input bar with dynamic styling 
         <div>
             <label 
                 htmlFor={id}

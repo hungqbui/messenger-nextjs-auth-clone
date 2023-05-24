@@ -16,6 +16,7 @@ export default function Home() {
         "
       >
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
+            {/* App logo */}
             <Image
                 alt=":ogo"
                 height="72"
@@ -36,6 +37,7 @@ export default function Home() {
                 Sign in to your account
             </h2>
         </div>
+        {/* App auth form */}
         <AuthForm />
       </div>
     )

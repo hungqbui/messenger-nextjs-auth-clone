@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// User model definition
+model User {
+
+  // id of type string single-field id, default value
+  // of 'auto' map to mongodb's id of '_id'
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+   
+  // Optional fields, not required if user chooses social login
+  // Optional String name
+  name String?
+
+  // Optional String email that is unique for every user
+  email String? @unique
+
+  // Optional datetime of the email verification
+  emailVerified DateTime?
+
+  // Optional string url of image
+  image String?
+
+  // Optional hashedPassword
+  hashedPassword String?
+
+  // Datetime of user creation, default to now
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relation for the User model
+  accounts Account[]
+}
+
+model Account {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Required fields for Account
+  userId String @db.ObjectId
+  type String
+  provider String
+  providerAccountId String
+
+  // Optional string token, mapping to mongo's string (In postgres is db.Text)
+  refresh_token String? @db.String
+  access_token String? @db.String
+  expires_at Int?
+  token_type String?
+  scope String?
+  id_token String? @db.String
+  session_state String?
+
+  // Relation between the User model and the Account model
+  // Mapping user model to the userId field with reference to User's id field
+  // with instruction when the relation is deleted
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // The combination of these is unique
+  @@unique([provider, providerAccountId])
+}

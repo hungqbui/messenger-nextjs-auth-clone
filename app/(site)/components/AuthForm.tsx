@@ -1,22 +1,31 @@
+
+// To make the form interactive
 'use client';
 
+// Import axios for https requests
+import axios from 'axios';
+
+// Import react's hooks and fields
 import { useState, useCallback } from "react";
-import { setConstantValue } from "typescript";
 import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
+
+// Import social icons from react-icons
 import { BsGithub, BsGoogle } from 'react-icons/bs';
 
-
+// Import components
 import Input from "@/app/components/inputs/Input";
 import Button from "@/app/components/Button";
 import AuthSocialButton from './AuthSocialButton';
-import { Island_Moments } from "next/font/google";
 
 type Variant = 'LOGIN' | 'REGISTER';
 
 const AuthForm = () => {
+
+    // Variants and states of the form
     const [variant, setVariant] = useState<Variant>('LOGIN');
     const [isLoading, setIsLoading] = useState(false);
 
+    // Toggle function to switch between login and register
     const toggleVariant = useCallback(() => {
         if (variant === 'LOGIN') {
             setVariant('REGISTER');
@@ -39,11 +48,14 @@ const AuthForm = () => {
         }
     });
 
+    // Function handles form submission dynamically depending on variant
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setIsLoading(true);
-
+        
         if (variant === 'REGISTER') {
-            // Axios Register
+
+            // Axios post call
+            axios.post('../../api/register', data)
         }
 
         if (variant === 'LOGIN') {
@@ -51,6 +63,7 @@ const AuthForm = () => {
         }
     }
 
+    // Function handles authentication via social accounts
     const socialAction = (action: string) => {
         setIsLoading(true);
 
@@ -76,32 +89,43 @@ const AuthForm = () => {
                     sm:px-10
                 "
             >
+                {/* Main form */}
                 <form 
                     className="space-y-6"
+                    // Use handleSubmit to pass argument to onSubmit
                     onSubmit={handleSubmit(onSubmit)}
                 >
+                    {/* Only show the 'Name' field when the user is registering */}
                     {variant === 'REGISTER' && (
                         <Input 
                             id = 'name'
                             label = 'Name'
                             register={register}
                             errors={errors}
+                            disabled={isLoading}
                         />
                     )}
+
+                    {/* Inputs for emails and passwords */}
                     <Input id='email' label='Email address' type="email" register={register} errors={errors} disabled={isLoading}/>
                     <Input id='password' label='Password' type="password" register={register} errors={errors} disabled={isLoading}/>
                 
                     <div>
+
+                        {/* Form submit button */}
                         <Button
                             disabled={isLoading}
                             fullWidth
                             type='submit'
                         >
+                            {/* Display text correspondingly */}
                             {variant === 'LOGIN' ? 'Sign In' : 'Register'}
+
                         </Button>
                     </div>
                 </form>
 
+                {/* Social accounts sign-in alternatives option */}
                 <div className="mt-6">
                     <div className="relative">
                         <div
@@ -123,8 +147,10 @@ const AuthForm = () => {
 
                         </div>
                     </div>
-
+                    {/* Display Google and GitHub log-in options as AuthSocialButtons */}
                     <div className="mt-6 flex gap-2">
+
+                        {/* Create buttons with corresponding icons and onClick actions */}
                         <AuthSocialButton
                             icon={BsGithub}
                             onClick={() => socialAction('github')}
@@ -136,6 +162,7 @@ const AuthForm = () => {
                     </div>
                 </div>
 
+                {/* Variant changing button and display content correspondingly */}
                 <div className="
                     flex
                     gap-2

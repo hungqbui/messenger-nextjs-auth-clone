@@ -1,7 +1,9 @@
 'use client'
 
+// Import clsx for conditional styling
 import clsx from 'clsx'
 
+// Declare an interface for every button props
 interface ButtonProps {
     type: 'button' | 'submit' | 'reset' | undefined
     fullWidth?: boolean;
@@ -12,6 +14,7 @@ interface ButtonProps {
     disabled?: boolean;
 }
 
+// Implement the ButtonProps interface to the Button element
 const Button: React.FC<ButtonProps> = ({
     type,
     fullWidth,
@@ -22,6 +25,7 @@ const Button: React.FC<ButtonProps> = ({
     disabled
 }) => {
     return ( 
+        // Return a dynamically styled Button with clsx, with the passed arguments
         <button
             onClick={onClick}
             type={type}
