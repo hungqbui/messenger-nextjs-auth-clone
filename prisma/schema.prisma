@@ -36,7 +36,6 @@ model User {
 
   // Datetime of user creation, default to now
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   // Relation for the User model
   accounts Account[]
