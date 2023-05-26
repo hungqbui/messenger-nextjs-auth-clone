@@ -20,6 +20,7 @@ import { BsGithub, BsGoogle } from 'react-icons/bs';
 import Input from "@/app/components/inputs/Input";
 import Button from "@/app/components/Button";
 import AuthSocialButton from './AuthSocialButton';
+import { Prisma } from '@prisma/client';
 
 type Variant = 'LOGIN' | 'REGISTER';
 
@@ -60,7 +61,9 @@ const AuthForm = () => {
 
             // Axios post call
             axios.post('../../api/register', data)
-            .catch(() => toast.error("Something went wrong!"))
+            .catch((e) => {
+                toast.error(e.response.data)
+            })
             .finally(() => setIsLoading(false));
         }
 
